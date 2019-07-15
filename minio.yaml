@@ -2,14 +2,19 @@ apiVersion: template.openshift.io/v1
 kind: Template
 labels:
   template: Minio
-message: Minio template
 metadata:
   annotations:
-    description: Deploys Minio using existing PVCs
+    description: This template deploys S3 compatible private Object Store Minio using existing PVCs.
+    tags: S3, Object Store
+    openshift.io/display-name: Minio Object Store
+    iconClass: icon-scala
+    openshift.io/provider-display-name: CSC-IT Center for Science Ltd.
+    openshift.io/documentation-url: https://github.com/CSCfi/Minio-OpenShift/blob/master/README.md
+    openshift.io/support-url: https://rahti.csc.fi/
 
-    openshift.io/display-name: minio
-    openshift.io/provider-display-name: CSC
   name: minio
+  message: In case you want to use existing PVC for Minio Storage, please update PVC name with the PVC you want to use.
+
 
 objects:
 
@@ -128,13 +133,13 @@ objects:
 parameters:
   - name: ACCESSKEY
     required: true
-    description: Access key
+    description: Access key, its length should be between minimum 3 characters.
     displayName: Access key
     from: '[a-zA-Z0-9]{32}'
     generate: expression
 
   - name: SECRETKEY
-    description: "Secret key"
+    description: Secret key, its length should be between 8 & 40 characters.
     displayName: Secret key
     required: true
     from: '[a-zA-Z0-9]{32}'
