@@ -7,7 +7,7 @@ metadata:
     description: This template deploys S3 compatible private Object Store Minio using existing PVCs or if one of given name doesn't exist a new one will be created.
     tags: S3, Object Store
     openshift.io/display-name: Minio Object Store
-    iconClass: icon-scala
+    iconClass: fa fa-archive 
     openshift.io/provider-display-name: CSC-IT Center for Science Ltd.
     openshift.io/documentation-url: https://github.com/CSCfi/Minio-OpenShift/blob/master/README.md
     openshift.io/support-url: https://rahti.csc.fi/
