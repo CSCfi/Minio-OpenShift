@@ -2,7 +2,7 @@
 
 This template deploys a private object store using [Minio](https://min.io/) in [Rahti](https://rahti.csc.fi/), CSC's OpenShift cluster. The template creates a single pod deployment for Minio, which uses PVC as a backend volume for storing data. PVC size is provided to template as parameters & existing PVC could be also used. Please follow [Minio User Guide](https://www.markdownguide.org/basic-syntax/) for usage of Minio object store.
 
-##Usage
+## Usage
 
 ### Using Rahti Web Interface
 1. Create a new project with the "Create Project" button.
