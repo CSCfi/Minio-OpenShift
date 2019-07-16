@@ -13,7 +13,7 @@ metadata:
     openshift.io/support-url: https://rahti.csc.fi/
 
   name: minio
-  message: In case you want to use existing PVC for Minio Storage, please update PVC name with the PVC you want to use.
+  message: In case you want to use existing PVC for Minio Storage, please update PVC name with the PVC you want to use. In this case, Rahti will issue an error that no new PVC is created but proceeds with creating the rest of the application nevertheless.
 
 
 objects:
