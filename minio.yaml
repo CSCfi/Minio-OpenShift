@@ -4,7 +4,7 @@ labels:
   template: Minio
 metadata:
   annotations:
-    description: This template deploys S3 compatible private Object Store Minio using existing PVCs.
+    description: This template deploys S3 compatible private Object Store Minio using existing PVCs or if one of given name doesn't exist a new one will be created.
     tags: S3, Object Store
     openshift.io/display-name: Minio Object Store
     iconClass: icon-scala
