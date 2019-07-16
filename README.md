@@ -11,7 +11,7 @@ This template deploys a private object store using [Minio](https://min.io/) in [
 3. Click the "Import YAML/JSON" button.
 4. Upload minio.yaml or copy & paste its content.
 5. Click Create, You can optionally check the checkbox "Save Template" which will make this template available for others with in your Rahti project.
-6. Continue & provide [parameters](place3) values, finally click create.
+6. Continue & provide [parameters](##-parameters-to-be-supplied) values, finally click create.
 7. Once deployment is successful, Click on "Application > Routes" to get URL of your deployed Minio object store.
 8. Login to your Minio object store using Access & Secret Key.
 
@@ -29,7 +29,7 @@ oc new-project <your Rahti project name> --description="csc_project: <your CSC p
 for example:
 oc new-project demo --description="csc_project: project_100123"
 ```
-4. Deploy your Minio object store from deployment template, remember to supply value of [parameters](place3) for deployment.  
+4. Deploy your Minio object store from deployment template, remember to supply value of [parameters](##-parameters-to-be-supplied) for deployment.  
 ```bash
 oc new-app -f <path to your template> -p PARAM1=Value1 -p PARAM2=VALUE2 -p PARAM3=VALUE3
 for example:
