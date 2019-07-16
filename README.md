@@ -1,6 +1,6 @@
 # Minio-OpenShift
 
-This template deploys a private object store using [Minio](https://min.io/) in [Rahti](https://rahti.csc.fi/), CSC's OpenShift cluster. The template creates a single pod deployment for Minio, which uses PVC as backend volume for storing data. PVC size is provided to template as parameters & existing PVC could be also used.
+This template deploys a private object store using [Minio](https://min.io/) in [Rahti](https://rahti.csc.fi/), CSC's OpenShift cluster. The template creates a single pod deployment for Minio, which uses PVC as a backend volume for storing data. PVC size is provided to template as parameters & existing PVC could be also used. Please follow [Minio User Guide](https://www.markdownguide.org/basic-syntax/) for usage of Minio object store.
 
 ##Usage
 
@@ -11,7 +11,7 @@ This template deploys a private object store using [Minio](https://min.io/) in [
 3. Click the "Import YAML/JSON" button.
 4. Upload minio.yaml or copy & paste its content.
 5. Click Create, You can optionally check the checkbox "Save Template" which will make this template available for others with in your Rahti project.
-6. Continue & provide parameters values, finally click create.
+6. Continue & provide [parameters](place3) values, finally click create.
 7. Once deployment is successful, Click on "Application > Routes" to get URL of your deployed Minio object store.
 8. Login to your Minio object store using Access & Secret Key.
 
@@ -29,18 +29,20 @@ oc new-project <your Rahti project name> --description="csc_project: <your CSC p
 for example:
 oc new-project demo --description="csc_project: project_100123"
 ```
-4. Deploy your python application from GitHub using [S2I utility](https://docs.openshift.com/container-platform/3.6/creating_images/s2i.html). With OpenShift's S2I utility, you can directly deploy your applications in Rahti from application source code hosted in some VCS for ex. GitHub.
+4. Deploy your Minio object store from deployment template, remember to supply value of [parameters](place3) for deployment.  
 ```bash
-# In this example we use current repository to deploy a demo Python Flask web application.
-oc new-app https://github.com/shukapoo/rahti-demo.git --name web-demo -e APP_FILE=src/app.py
+oc new-app -f <path to your template> -p PARAM1=Value1 -p PARAM2=VALUE2 -p PARAM3=VALUE3
+for example:
+oc new-app -f Minio-OpenShift/minio.yaml -p CLUSTER_NAME=skminio -p STORAGE_SIZE=2Gi
 ```
 ## Parameters to be supplied
+
 |Parameter|	Description|
 |---------|------------|
 |Access Key	| Access key for your Minio object store, its length should be between minimum 3 characters.|
 |Secret Key	|Secret key for your Minio Object store , its length should be between 8 & 40 characters.|
-|Cluster Name	|Name of the minio cluster instance which must be DNS label compatible|
+|Cluster Name	|Name of the Minio cluster instance, this name must be DNS compatible name|
 |Domain Suffix	| Hostname suffix of the application.|
-|PVC Name |	PVC name to mount for minio buckets|
+|PVC Name |	PVC name to mount for your Minio buckets. In case you want to use existing volume in your project, please provide its name|
 |Storage Size|	Your Minio Object store's backend volume size|
-|Whitelist|	IP whitelist for the application. Must not contain errors, otherwise Rahti will allow all traffic.|
+|Whitelist|	IP address block (CIDR) from which traffic is allowed to your Minio Object Store. In case left blank or errors in IP address block, Rahti will allow all traffic from internet |
