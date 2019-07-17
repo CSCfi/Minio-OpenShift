@@ -1,6 +1,6 @@
 # Minio-OpenShift
 
-This template for deploying a private S3 API supporting object store [Minio](https://min.io/) in [Rahti](https://rahti.csc.fi/), CSC's Kubernetes cluster. The template creates a single pod deployment for Minio from [minio/minio](https://hub.docker.com/r/minio/minio) public container image. The application uses a persistent volume as a backend data storage. The volume size is provided as a template parameter for a newly created persistent volume, but if an existing volume of the given name exists a new one will not be created and Rahti will issue an error but the Minio instance will still utilize the existing volume. Please follow [Minio User Guide](https://www.markdownguide.org/basic-syntax/) for usage of Minio object store.
+This template for deploying a private S3 API supporting object store [Minio](https://min.io/) in [Rahti](https://rahti.csc.fi/), CSC's Kubernetes cluster. The template creates a single pod deployment for Minio from [minio/minio](https://hub.docker.com/r/minio/minio) public container image. The application uses a persistent volume as a backend data storage. The volume size is provided as a template parameter for a newly created persistent volume, but if an existing volume of the given name exists a new one will not be created and Rahti will issue an error but the Minio instance will still utilize the existing volume. Please follow [Minio User Guide](https://docs.min.io/docs/minio-quickstart-guide.htmlsyntax/) for usage of Minio object store.
 
 ## Usage
 
