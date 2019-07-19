@@ -2,34 +2,40 @@ apiVersion: template.openshift.io/v1
 kind: Template
 labels:
   template: Minio
+message: |-
+  Minio has been scheduled for creation in your project, and should be soon available at: https://${CLUSTER_NAME}.${DOMAINSUFFIX}
+
 metadata:
   annotations:
-    description: This template deploys S3 compatible private Object Store Minio using existing PVCs or if one of given name doesn't exist a new one will be created.
+    template.alpha.openshift.io/wait-for-ready: "true"
+    description: This template deploys an S3 compatible private Object Storage based on Minio.
+
+
+      The backed storage can be either a new or an existing PVC.
+
+
+      In case you want to use existing PVC for Minio Storage, please update PVC name with the PVC you want to use.
+      In this case, Rahti will issue an error that no new PVC is created but proceeds with creating the rest of the
+      application nevertheless.
+
     tags: S3, Object Store
     openshift.io/display-name: Minio Object Store
-    iconClass: fa fa-archive 
+    iconClass: fa fa-archive
     openshift.io/provider-display-name: CSC-IT Center for Science Ltd.
     openshift.io/documentation-url: https://github.com/CSCfi/Minio-OpenShift/blob/master/README.md
-    openshift.io/support-url: https://rahti.csc.fi/
-
+    openshift.io/support-url: https://www.csc.fi/contact-info
   name: minio
-  message: In case you want to use existing PVC for Minio Storage, please update PVC name with the PVC you want to use. In this case, Rahti will issue an error that no new PVC is created but proceeds with creating the rest of the application nevertheless.
-
 
 objects:
-
 # Minio part
-- apiVersion: apps/v1
-  kind: Deployment
+- apiVersion: v1
+  kind: DeploymentConfig
   metadata:
     labels:
       app: ${CLUSTER_NAME}
     name: ${CLUSTER_NAME}
   spec:
     replicas: 1
-    selector:
-      matchLabels:
-        app: ${CLUSTER_NAME}
     template:
       metadata:
         labels:
@@ -48,6 +54,16 @@ objects:
             requests:
               cpu: 200m
               memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: 9000
+              scheme: HTTP
+          livelinessProbe:
+            httpGet:
+              path: /health/live
+              port: 9000
+              scheme: HTTP
           volumeMounts:
           - mountPath: /data/files
             name: minio-vol
@@ -124,6 +140,7 @@ objects:
     labels:
       app: ${CLUSTER_NAME}
   spec:
+    storageClassName: glusterfs-storage
     accessModes:
       - "ReadWriteMany"
     resources:
@@ -155,7 +172,6 @@ parameters:
     description: Hostname suffix of the application.
     displayname: Hostname suffix of the application.
     value: rahtiapp.fi
-
 
   - name: PVCNAME
     required: true
