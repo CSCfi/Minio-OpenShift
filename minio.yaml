@@ -11,7 +11,7 @@ metadata:
     description: This template deploys an S3 compatible private Object Storage based on Minio.
 
 
-      The backed storage can be either a new or an existing PVC.
+      The backend storage can be either a new or an existing persistent volume claim (PVC).
 
 
       In case you want to use existing PVC for Minio Storage, please update PVC name with the PVC you want to use.
